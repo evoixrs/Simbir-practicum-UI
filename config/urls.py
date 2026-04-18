@@ -1,3 +1,1 @@
-
 BASE_URL = "https://automationteststore.com/"
-
