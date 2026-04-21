@@ -1,4 +1,5 @@
 import logging
+import os
 import shutil
 import tempfile
 
@@ -70,7 +71,7 @@ def driver(request):
     """Настраиваем ChromeDriver и логи"""
     service = Service(
         service_args=["--verbose"],
-        log_output="chromedriver.log",
+        log_output=f"chromedriver-{os.getpid()}.log",
     )
 
     """Запуск Chrome с подготовленными опциями и сервисом"""

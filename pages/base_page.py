@@ -14,6 +14,11 @@ class BasePage:
     def open(self, url):
         self.driver.get(url)
 
+    """Возвращается назад в браузере указанное количество раз"""
+    def go_back(self, times=1):
+        for _ in range(times):
+            self.driver.back()
+
     """Ожидает появления одного элемента в DOM и возвращает его"""
     def find_element(self, locator):
         return WebDriverWait(self.driver, self.timeout).until(
@@ -38,6 +43,12 @@ class BasePage:
             EC.element_to_be_clickable(locator)
         )
         element.click()
+
+    """Очищает поле и вводит текст"""
+    def input(self, locator, text):
+        element = self.find_element(locator)
+        element.clear()
+        element.send_keys(text)
 
     """Возвращает очищенный текст одного элемента"""
     def get_text(self, locator):
