@@ -56,8 +56,9 @@ def test_search_results_and_cart(driver, base_url):
 
         if product_index == 1:
             with allure.step("Вернуться на страницу отсортированной поисковой выдачи"):
-                search_page.go_back(2)
-                search_page.wait_for_visible(SearchPageLocators.PRODUCT_CARDS)
+                home_page.open(base_url)
+                home_page.search("shirt")
+                search_page.sort_by(SearchPageLocators.SORT_NAME_ASC)
                 assert search_page.get_products_count() >= 3
 
     with allure.step("Проверить состав корзины"):
