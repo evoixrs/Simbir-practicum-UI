@@ -2,12 +2,14 @@ import logging
 import os
 import shutil
 import tempfile
+from collections.abc import Generator
 
 import allure
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from config.urls import BASE_URL
 
@@ -15,7 +17,7 @@ from config.urls import BASE_URL
 logger = logging.getLogger("qa")
 
 
-def pytest_addoption(parser):
+def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption("--base-url", action="store", default=BASE_URL,
         help="Base URL of test stand")
     parser.addoption("--headless", action="store_true", default=False,
@@ -23,14 +25,14 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture
-def base_url(request):
+def base_url(request: pytest.FixtureRequest) -> str:
     url = request.config.getoption("--base-url")
     logger.info("Base URL: %s", url)
     return url
 
 
 @pytest.fixture
-def driver(request):
+def driver(request: pytest.FixtureRequest) -> Generator[WebDriver, None, None]:
     options = Options()
     options.page_load_strategy = "eager"
 
@@ -85,7 +87,10 @@ def driver(request):
 
 
 @pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item, call):
+def pytest_runtest_makereport(
+    item: pytest.Item,
+    call: pytest.CallInfo[None],
+) -> Generator[None, None, None]:
     outcome = yield
     report = outcome.get_result()
 
