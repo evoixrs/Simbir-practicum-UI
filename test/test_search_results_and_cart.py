@@ -3,11 +3,11 @@ import random
 
 import allure
 
-from locators.page_locators import SearchPageLocators
 from pages.cart_page import CartPage
 from pages.home_page import HomePage
 from pages.product_page import ProductPage
 from pages.search_page import SearchPage
+from sorting.sort_options import SortOptions
 
 
 logger = logging.getLogger("qa")
@@ -17,7 +17,6 @@ logger = logging.getLogger("qa")
 @allure.story("Поиск, добавление товаров и пересчет суммы")
 @allure.title("Поиск shirt, добавление 2-го и 3-го товара и проверка итоговой суммы")
 def test_search_results_and_cart(driver, base_url):
-    """Создаем page object для главной страницы, поиска, товара и корзины"""
     home_page = HomePage(driver, base_url)
     search_page = SearchPage(driver, base_url)
     product_page = ProductPage(driver, base_url)
@@ -33,7 +32,7 @@ def test_search_results_and_cart(driver, base_url):
         assert search_page.get_products_count() >= 3
 
     with allure.step("Отсортировать выдачу по Name A - Z"):
-        search_page.sort_by(SearchPageLocators.SORT_NAME_ASC)
+        search_page.sort_by(SortOptions.NAME_ASC)
         names = search_page.get_product_names()
         assert names == sorted(names, key=str.casefold)
 
@@ -58,7 +57,7 @@ def test_search_results_and_cart(driver, base_url):
             with allure.step("Вернуться на страницу отсортированной поисковой выдачи"):
                 home_page.open(base_url)
                 home_page.search("shirt")
-                search_page.sort_by(SearchPageLocators.SORT_NAME_ASC)
+                search_page.sort_by(SortOptions.NAME_ASC)
                 assert search_page.get_products_count() >= 3
 
     with allure.step("Проверить состав корзины"):
