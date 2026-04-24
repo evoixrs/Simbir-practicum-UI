@@ -12,10 +12,14 @@ class ProductPage(BasePage):
     def get_product_price(self) -> Decimal:
         return self._parse_price(self.get_text(ProductPageLocators.PRODUCT_PRICE))
 
+    def has_product_options(self) -> bool:
+        return bool(self.driver.find_elements(*ProductPageLocators.PRODUCT_OPTIONS))
+
     def set_quantity(self, quantity: int) -> None:
         self.input(ProductPageLocators.QTY_INPUT, str(quantity))
 
     def get_quantity_limit(self) -> int | None:
+        # Лимит количества на странице не вынесен в отдельный атрибут, поэтому читаем его из текста страницы.
         page_text = self.get_page_text()
         limit = re.search(r"limit set to (\d+)", page_text)
 

@@ -7,6 +7,7 @@ class CartPageLocators:
     ROW_PRODUCT_NAME = (By.CSS_SELECTOR, "td:nth-child(2) a")
     ROW_QUANTITY_INPUT = (By.CSS_SELECTOR, "input[name^='quantity']")
     ROW_TOTAL_COLUMNS = (By.CSS_SELECTOR, "td.align_right")
+    ROW_REMOVE_BTN = (By.CSS_SELECTOR, "a[href*='remove=']")
     UPDATE_BTN = (By.XPATH, "//button[contains(., 'Update')]")
     SUB_TOTAL = (By.XPATH, "//table[@id='totals_table']//span[contains(normalize-space(.), 'Sub-Total:')]/parent::td/following-sibling::td/span")
     CART_TOTAL_LABEL = (By.CSS_SELECTOR, "span.extra.bold.totalamout")

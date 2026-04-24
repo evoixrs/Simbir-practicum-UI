@@ -84,6 +84,9 @@ class BasePage:
     def get_element_attribute(self, locator: Locator, attribute: str) -> str | None:
         return self.find_element(locator).get_attribute(attribute)
 
+    def get_element_attribute_value(self, element: WebElement, attribute: str) -> str | None:
+        return element.get_attribute(attribute)
+
     def get_inner_element_attribute(self, element: WebElement, locator: Locator, attribute: str) -> str | None:
         return element.find_element(*locator).get_attribute(attribute)
 

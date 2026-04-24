@@ -40,6 +40,21 @@ class CartPage(BasePage):
     def set_row_quantity(self, index: int, quantity: int) -> None:
         self.input_inner_element(self.get_rows()[index], CartPageLocators.ROW_QUANTITY_INPUT, str(quantity))
 
+    def remove_row_by_name(self, name: str) -> None:
+        current_rows = self.get_rows()
+        current_count = len(current_rows)
+
+        for row in current_rows:
+            if self.get_row_name(row).casefold() == name.casefold():
+                self.click_inner_element(row, CartPageLocators.ROW_REMOVE_BTN)
+
+                if current_count > 1:
+                    self.wait_for_visible(CartPageLocators.CART_ROWS)
+
+                return
+
+        raise AssertionError(f"Товар '{name}' не найден в корзине для удаления")
+
     def update_cart(self) -> None:
         self.click(CartPageLocators.UPDATE_BTN)
         self.wait_for_visible(CartPageLocators.CART_ROWS)

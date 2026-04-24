@@ -1,14 +1,57 @@
-# План работ
+# Simbir Practicum UI
 
-- [x] Довести `conftest.py`.
-- [x] Заполнить `config/urls.py`.
-- [x] Составить 3 тест-кейса в папке `docs`.
-- [ ] Описать локаторы.  + -
-- [ ] Реализовать Page Object. + -
-- [ ] Написать 3 UI-теста.  + -
-- [x] Добавить Allure.
-- [x] Проверить локальный запуск.
-- [x] Проверить параллельный запуск.
-- [x] Проверить Allure-отчет локально.
-- [x] Проверить GitHub Actions и публикацию Allure в Pages.
-- [x] Почистить лишние файлы.
+E2E UI-автотесты для сайта [Automation Test Store](https://automationteststore.com/).
+
+## Что в проекте
+
+- `pytest` + `selenium`
+- `Page Object`
+- `Allure`-отчеты
+- параллельный запуск через `pytest-xdist`
+- запуск в GitHub Actions с публикацией Allure в GitHub Pages
+
+## Структура
+
+- [docs/test_cases.md](docs/test_cases.md) — тест-кейсы
+- `config/` — конфигурация проекта
+- `locators/` — локаторы страниц
+- `pages/` — Page Object
+- `data/` — тестовые данные и вспомогательные значения
+- `test/` — UI-тесты
+
+## Запуск тестов
+
+Обычный запуск:
+
+```bash
+pytest
+```
+
+Headless-режим:
+
+```bash
+pytest test/ --headless
+```
+
+Параллельный запуск:
+
+```bash
+pytest test/ --headless -n auto
+```
+
+## Allure
+
+Сгенерировать локальный отчет:
+
+```bash
+pytest test/ --headless --alluredir=allure-results
+allure generate allure-results --clean -o allure-report
+```
+
+## CI
+
+В GitHub Actions настроены:
+
+- запуск тестов
+- генерация Allure-отчета
+- публикация отчета в GitHub Pages

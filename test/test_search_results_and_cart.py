@@ -63,6 +63,7 @@ def test_search_results_and_cart(driver: WebDriver, base_url: str) -> None:
 
         if product_index == 1:
             with allure.step("Вернуться на страницу отсортированной поисковой выдачи"):
+                # Восстанавливаем выдачу через новый поиск, потому что возврат по истории браузера нестабилен в CI.
                 home_page.open(base_url)
                 home_page.search("shirt")
                 search_page.sort_by(SortOptions.NAME_ASC)
