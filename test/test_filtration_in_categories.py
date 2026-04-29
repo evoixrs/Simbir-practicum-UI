@@ -8,7 +8,16 @@ from data.sort_options import SortOptions
 
 @allure.feature("Категории")
 @allure.story("Сортировка товаров")
+@allure.suite("UI tests")
+@allure.sub_suite("Catalog")
+@allure.tag("ui", "catalog", "sorting", "positive", "TC-01")
+@allure.severity(allure.severity_level.NORMAL)
 @allure.title("Сортировка товаров в подкатегории Men > Fragrance Sets")
+@allure.description(
+    "Проверка сортировки товаров по тест-кейсу TC-01 из docs/test_cases.md. "
+    "Тест открывает подкатегорию Men > Fragrance Sets и проверяет сортировку "
+    "по названию и цене в обоих направлениях."
+)
 def test_filtration_in_categories(driver: WebDriver, base_url: str) -> None:
     home_page = HomePage(driver, base_url)
     category_page = CategoryPage(driver, base_url)

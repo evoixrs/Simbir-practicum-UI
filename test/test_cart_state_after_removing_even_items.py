@@ -11,7 +11,16 @@ from pages.product_page import ProductPage
 
 @allure.feature("Корзина")
 @allure.story("Удаление товаров на четных позициях из исходного порядка")
+@allure.suite("UI tests")
+@allure.sub_suite("Cart")
+@allure.tag("ui", "cart", "remove", "positive", "TC-03")
+@allure.severity(allure.severity_level.CRITICAL)
 @allure.title("Состояние корзины после удаления товаров с позиций 2 и 4")
+@allure.description(
+    "Проверка корзины по тест-кейсу TC-03 из docs/test_cases.md. "
+    "Тест добавляет 5 уникальных товаров, удаляет товары на позициях 2 и 4 "
+    "из исходного порядка и проверяет оставшиеся товары и Sub-Total."
+)
 def test_cart_state_after_removing_even_items(driver: WebDriver, base_url: str) -> None:
     home_page = HomePage(driver, base_url)
     product_page = ProductPage(driver, base_url)

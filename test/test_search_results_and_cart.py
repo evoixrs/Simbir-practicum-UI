@@ -16,7 +16,16 @@ logger = logging.getLogger("qa")
 
 @allure.feature("Корзина")
 @allure.story("Поиск, добавление товаров и пересчет суммы")
+@allure.suite("UI tests")
+@allure.sub_suite("Cart")
+@allure.tag("ui", "cart", "search", "positive", "TC-02")
+@allure.severity(allure.severity_level.CRITICAL)
 @allure.title("Поиск shirt, добавление 2-го и 3-го товара и проверка итоговой суммы")
+@allure.description(
+    "Проверка корзины по тест-кейсу TC-02 из docs/test_cases.md. "
+    "Тест выполняет поиск shirt, добавляет 2-й и 3-й товары, меняет количество "
+    "самого дешевого товара и проверяет итоговую сумму корзины."
+)
 def test_search_results_and_cart(driver: WebDriver, base_url: str) -> None:
     home_page = HomePage(driver, base_url)
     search_page = SearchPage(driver, base_url)

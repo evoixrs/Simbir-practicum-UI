@@ -31,6 +31,15 @@ def base_url(request: pytest.FixtureRequest) -> str:
     return url
 
 
+@pytest.fixture(autouse=True)
+def allure_test_parameters(
+    base_url: str,
+    request: pytest.FixtureRequest,
+) -> None:
+    allure.dynamic.parameter("base_url", base_url)
+    allure.dynamic.parameter("headless", request.config.getoption("--headless"))
+
+
 @pytest.fixture
 def driver(request: pytest.FixtureRequest) -> Generator[WebDriver, None, None]:
     options = Options()
@@ -100,6 +109,15 @@ def pytest_runtest_makereport(
     driver = item.funcargs.get("driver")
     if driver is None:
         return
+
+    try:
+        allure.attach(
+            driver.current_url,
+            name="current-url",
+            attachment_type=allure.attachment_type.TEXT,
+        )
+    except Exception as exc:
+        logger.warning("Failed to attach current URL: %s", exc)
 
     try:
         allure.attach(
